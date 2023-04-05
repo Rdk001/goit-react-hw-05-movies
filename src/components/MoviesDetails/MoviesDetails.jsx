@@ -52,8 +52,8 @@ const MoviesDetails = () => {
       <div>
         <hr />
         <h2>Aditional information</h2>
-        <DetailsLink to={'cast'}>Cast</DetailsLink>
-        <DetailsLink to={'reviews'}>Reviews</DetailsLink>
+        <DetailsLink to="cast">Cast</DetailsLink>
+        <DetailsLink to="reviews">Reviews</DetailsLink>
         <hr />
       </div>
       <Outlet />

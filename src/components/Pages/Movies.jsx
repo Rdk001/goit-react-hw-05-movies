@@ -33,6 +33,10 @@ const Movies = () => {
     const searchMovie = async () => {
       try {
         const data = await MovieSearchApi(value);
+        if (data.results.length === 0) {
+          alert(`no response on request ${value}`);
+          return;
+        }
         setMovies(data.results);
       } catch (error) {
         console.log(error.message);
@@ -54,7 +58,7 @@ const Movies = () => {
 
   return (
     <>
-      {!value && <SearchBox handleSubmit={handleSubmit} />}
+      {movies && <SearchBox handleSubmit={handleSubmit} />}
       <List>
         {movies.map(({ title, id }) => (
           <Item key={id}>
