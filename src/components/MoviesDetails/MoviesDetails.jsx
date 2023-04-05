@@ -47,7 +47,7 @@ const MoviesDetails = () => {
       <Button onClick={handleGoBack} type="button">
         Go Back
       </Button>
-      {/* <Button to="/movies">Go Back</Button> */}
+
       <MovieInfo movie={movie} imageData={imageData} />
       <div>
         <hr />
