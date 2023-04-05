@@ -21,13 +21,25 @@ const Wrapper = styled.div`
   border: 1px solid black;
   margin-bottom: 20px;
 `;
+// const Button = styled(Link)`
+//   display: inline-block;
+//   padding: 5px 8px;
+//   border-radius: 4px;
+//   background-color: orangered;
+//   color: white;
+//   margin-bottom: 5px;
+//   border: none;
+//   text-decoration: none;
+// `;
 const Button = styled.button`
+  display: inline-block;
   padding: 5px 8px;
   border-radius: 4px;
   background-color: orangered;
   color: white;
   margin-bottom: 5px;
   border: none;
+  text-decoration: none;
 `;
 const Genres = styled.div`
   display: flex;
@@ -40,7 +52,9 @@ const Genres = styled.div`
   margin-bottom: 20px;
 `;
 const DetailsLink = styled(NavLink)`
+  display: inline-block;
   padding: 5px 8px;
+  margin-top: 10px;
   text-decoration: none;
   color: black;
   font-size: 18px;

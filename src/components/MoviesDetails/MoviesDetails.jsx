@@ -1,13 +1,16 @@
-import { Outlet, useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getMovieDetails, getImages } from '../Servise/MovieApi';
-import { Button, DetailsLink } from './MovieDetails.styled';
 import MovieInfo from 'components/MovieInfo';
+import { Button, DetailsLink } from './MovieDetails.styled';
+
 const MoviesDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
+  const savedNavigate = useRef(location.state?.from);
 
   useEffect(() => {
     const movieDetails = async () => {
@@ -31,24 +34,24 @@ const MoviesDetails = () => {
     movieDetails();
   }, [movieId]);
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-  if (!movie) {
+  if (!movie || !imageData) {
     return null;
   }
-  if (!imageData) {
-    return;
-  }
+
+  const handleGoBack = () => {
+    navigate(savedNavigate.current);
+  };
 
   return (
     <>
       <Button onClick={handleGoBack} type="button">
         Go Back
       </Button>
+      {/* <Button to="/movies">Go Back</Button> */}
       <MovieInfo movie={movie} imageData={imageData} />
       <div>
         <hr />
+        <h2>Aditional information</h2>
         <DetailsLink to={'cast'}>Cast</DetailsLink>
         <DetailsLink to={'reviews'}>Reviews</DetailsLink>
         <hr />

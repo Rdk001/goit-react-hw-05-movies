@@ -1,7 +1,7 @@
-const SearchBox = ({ handeSubmit, handleChange }) => {
+const SearchBox = ({ handleSubmit }) => {
   return (
-    <form onSubmit={handeSubmit}>
-      <input onChange={e => handleChange(e.target.value)} type="text"></input>
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="query"></input>
       <button type="submit">Search</button>
     </form>
   );

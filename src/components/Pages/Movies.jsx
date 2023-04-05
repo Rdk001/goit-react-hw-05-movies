@@ -1,12 +1,30 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { MovieSearchApi } from 'components/Servise/MovieApi';
 import { List, Item, LinkItem } from './Home.styled';
+import SearchBox from 'components/SearchBox/SearchBox';
 
 const Movies = () => {
   const [value, setValue] = useState('');
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const query = searchParams.get('query');
+
+  useEffect(() => {
+    if (!query) {
+      return;
+    }
+    const searchMovie = async () => {
+      try {
+        const data = await MovieSearchApi(query);
+        setMovies(data.results);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    searchMovie();
+  }, [query]);
 
   useEffect(() => {
     if (!value) {
@@ -20,6 +38,7 @@ const Movies = () => {
         console.log(error.message);
       }
     };
+
     searchMovie();
   }, [value]);
 
@@ -27,26 +46,21 @@ const Movies = () => {
     e.preventDefault();
 
     setValue(e.target.elements.query.value);
-
     setSearchParams(
       value !== '' ? {} : { query: e.target.elements.query.value }
     );
-
     e.target.elements.query.value = '';
   };
 
   return (
     <>
-      {!value && (
-        <form onSubmit={handleSubmit}>
-          <input type="text" name="query"></input>
-          <button type="submit">Search</button>
-        </form>
-      )}
+      {!value && <SearchBox handleSubmit={handleSubmit} />}
       <List>
         {movies.map(({ title, id }) => (
           <Item key={id}>
-            <LinkItem to={`${id}`}>{title}</LinkItem>
+            <LinkItem to={`${id}`} state={{ from: location }}>
+              {title}
+            </LinkItem>
           </Item>
         ))}
       </List>

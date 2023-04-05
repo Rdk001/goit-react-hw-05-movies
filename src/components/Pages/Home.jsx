@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import HomeApi from 'components/Servise/HomeApi';
 import { List, Item, LinkItem } from './Home.styled';
-
+import { useLocation } from 'react-router-dom';
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     const addMovies = async () => {
@@ -14,16 +15,18 @@ const Home = () => {
         console.log(error.message);
       }
     };
-
     addMovies();
   }, []);
 
   return (
     <>
+      <h2>Trending today</h2>
       <List>
         {movies.map(({ title, id }) => (
           <Item key={id}>
-            <LinkItem to={`movies/${id}`}>{title}</LinkItem>
+            <LinkItem to={`movies/${id}`} state={{ from: location }}>
+              {title}
+            </LinkItem>
           </Item>
         ))}
       </List>
